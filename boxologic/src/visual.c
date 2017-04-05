@@ -1,59 +1,5 @@
-/*
-// ***************************************************************************
-// INCLUDED HEADER FILES
-// ***************************************************************************
-*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <graphics.h>
+#include "visual.h"
 
-/*
-// ***************************************************************************
-// Function prototypes
-// ***************************************************************************
-*/
-void Initialize(void);
-void Pack(void);
-void PutBox(void);
-void SayGoodbye(void);
-void Pause(void);
-void MainWindow(char *header);
-void StatusLine(char *msg);
-void DrawBorder(void);
-void changetextstyle(int font, int direction, int charsize);
-int gprintf(int *xloc, int *yloc, char *fint,...);
-
-/*
-// ***************************************************************************
-// VARIABLE, CONSTANT AND STRUCTURE DECLARATIONS
-// ***************************************************************************
-*/
-int GraphDriver;                            /* The Graphics device driver */
-int GraphMode;                              /* The Graphics mode value */
-double AspectRatio;                         /* Aspect ratio of a pixel on the screen*/
-int MaxX, MaxY;                             /* The maximum resolution of the screen */
-int MaxColors;                              /* The maximum # of colors available */
-int ErrorCode;                              /* Reports any graphics errors */
-struct palettetype palette;                 /* Used to read palette info */
-
-struct dataarray {
-  int cx, cy, cz, pax, pay, paz; 
-} data[2000];
-
-int px, py, pz, cox, coy, coz, packx, packy, packz, a, b, index, currenty, q;
-
-double max, sc;
-
-char strpx[8], strpy[8], strpz[8], oldstrcoy[8], strcox[8], strcoy[8], strcoz[8], strpackx[8], strpacky[8], strpackz[8];
-
-FILE *igf;
-
-/*
-// ***************************************************************************
-// BEGIN MAIN FUNCTION
-// ***************************************************************************
-*/
 int main()
 {
   Initialize();                             /* Set system into Graphics mode */
@@ -65,8 +11,8 @@ int main()
 
 /*
 // ***************************************************************************
-// INITIALIZE: INITIALIZES THE GRAPHICS SYSTEM AND 
-// REPORTS ANY ERRORS WHICH OCCURED. 
+// INITIALIZE: INITIALIZES THE GRAPHICS SYSTEM AND
+// REPORTS ANY ERRORS WHICH OCCURED.
 // ***************************************************************************
 */
 
@@ -80,8 +26,8 @@ void Initialize(void)
   {
     printf(" Graphics System Error: %s\n", grapherrormsg( ErrorCode));
     exit(1);
-  } 
-  
+  }
+
   getpalette( &palette);                    /* Read the palette from board */
   MaxColors = getmaxcolor() + 1;            /* Read maximum number of colors*/
   MaxX = getmaxx();                         /* Read size of screen */
@@ -92,28 +38,28 @@ void Initialize(void)
 
 /*
 // ***************************************************************************
-// PACK: READS THE DATA FROM "VISUDAT" FILE AND ARRANGES 
-// BOXES TO PACK FROM FAR END TO THE CLOSE 
+// PACK: READS THE DATA FROM "VISUDAT" FILE AND ARRANGES
+// BOXES TO PACK FROM FAR END TO THE CLOSE
 // ***************************************************************************
 */
 void Pack(void)
 {
   struct viewporttype vp;
   char buffer[10];
-  
+
   MainWindow( "PACKING OF THE BEST SOLUTION FOUND" );
-  if ((igf=fopen("visudat","r")) == NULL) 
+  if ((igf=fopen("visudat","r")) == NULL)
   {
     outtextxy(0,0,"CANNOT OPEN FILE visudat");
     exit(1);
   }
-  
+
   fscanf(igf,"%s %s %s",strpx, strpy, strpz);
-  px = atoi(strpx); 
-  py = atoi(strpy); 
+  px = atoi(strpx);
+  py = atoi(strpy);
   pz = atoi(strpz);
   max = px;
-  if (py > max) max = py; 
+  if (py > max) max = py;
   if (pz > max) max = pz;
   sc=120/max;
   getviewsettings( &vp);
@@ -137,38 +83,38 @@ void Pack(void)
   outtextxy(460,80, "DX: DY: DZ:");
   index=1;
   fscanf (igf,"%s %s %s %s %s %s", strcox, strcoy, strcoz, strpackx, strpacky, strpackz);
-  cox = atoi(strcox); 
-  coy = atoi(strcoy); 
+  cox = atoi(strcox);
+  coy = atoi(strcoy);
   coz = atoi(strcoz);
-  packx = atoi(strpackx); 
-  packy = atoi(strpacky); 
+  packx = atoi(strpackx);
+  packy = atoi(strpacky);
   packz = atoi(strpackz);
-  data[index].cx = cox; 
-  data[index].cy = coy; 
+  data[index].cx = cox;
+  data[index].cy = coy;
   data[index].cz = coz;
-  data[index].pax = packx; 
-  data[index].pay = packy; 
+  data[index].pax = packx;
+  data[index].pay = packy;
   data[index].paz = packz;
-  index++; 
+  index++;
   currenty = data[index].cy;
-  
+
   while (fscanf (igf,"%s %s %s %s %s %s", strcox, strcoy, strcoz, strpackx, strpacky, strpackz) != EOF)
   {
-    cox = atoi(strcox); 
-    coy = atoi(strcoy); 
+    cox = atoi(strcox);
+    coy = atoi(strcoy);
     coz = atoi(strcoz);
     packx = atoi(strpackx);
-    packy = atoi(strpacky); 
+    packy = atoi(strpacky);
     packz = atoi(strpackz);
-    data[index].cx = cox; 
-    data[index].cy = coy; 
+    data[index].cx = cox;
+    data[index].cy = coy;
     data[index].cz = coz;
-    data[index].pax = packx; 
-    data[index].pay = packy; 
+    data[index].pax = packx;
+    data[index].pay = packy;
     data[index].paz = packz;
     if (data[index].cy != currenty)
     {
-      b = index; 
+      b = index;
       index--;
       PutBox();
     }
@@ -183,7 +129,7 @@ void Pack(void)
 
 /*
 // ***************************************************************************
-// PUTBOX: DRAW BOXES IN THEIR LOCATIONS 
+// PUTBOX: DRAW BOXES IN THEIR LOCATIONS
 // ***************************************************************************
 */
 void PutBox(void)
@@ -200,22 +146,22 @@ void PutBox(void)
     itoa(data[a].cx, strcox, 10); outtextxy(410,50, strcox);
     itoa(data[a].cy, strcoy, 10); outtextxy(460, 50, strcoy);
     itoa(data[a].cz, strcoz, 10); outtextxy(508, 50, strcoz);
-    bar3d(10 + sc * 2 * data[a].cx + sc * data[a].cz, 
-          350 - sc * 2 * data[a].cy - sc * .74 * data[a].cz - sc * 2 * data[a].pay, 
-          10 + sc * 2 * data[a].cx + sc * data[a].cz + sc * 2 * data[a].pax, 
-          350 - sc * 2 * data[a].cy - sc * .74 * data[a].cz, 
+    bar3d(10 + sc * 2 * data[a].cx + sc * data[a].cz,
+          350 - sc * 2 * data[a].cy - sc * .74 * data[a].cz - sc * 2 * data[a].pay,
+          10 + sc * 2 * data[a].cx + sc * data[a].cz + sc * 2 * data[a].pax,
+          350 - sc * 2 * data[a].cy - sc * .74 * data[a].cz,
           sc * data[a].paz, 1);
     if (toupper(getch()) == 'Q')
-    { 
-      q = 1; 
+    {
+      q = 1;
       break;
     }
   }
-  data[1].cx = data[b].cx; 
+  data[1].cx = data[b].cx;
   data[1].cy = data[b].cy;
-  data[1].cz = data[b].cz; 
+  data[1].cz = data[b].cz;
   data[1].pax = data[b].pax;
-  data[1].pay = data[b].pay; 
+  data[1].pay = data[b].pay;
   data[1].paz = data[b].paz;
   index = 1;
   currenty = data[index].cy;
@@ -223,8 +169,8 @@ void PutBox(void)
 
 /*
 // ***************************************************************************
-// SAYGOODBYE: GIVE A CLOSING SCREEN 
-// TO THE USER BEFORE LEAVING. 
+// SAYGOODBYE: GIVE A CLOSING SCREEN
+// TO THE USER BEFORE LEAVING.
 // ***************************************************************************
 */
 
@@ -232,7 +178,7 @@ void SayGoodbye(void)
 {
   struct viewporttype viewinfo;             /* Structure to read viewport */
   int h, w;
-  
+
   MainWindow( "== The End ==");
   getviewsettings( &viewinfo);              /* Read viewport settings */
   changetextstyle( TRIPLEX_FONT, HORIZ_DIR, 4);
@@ -247,14 +193,14 @@ void SayGoodbye(void)
 
 /*
 // ***************************************************************************
-// PAUSE: PAUSE UNTIL THE USER ENTERS A KEYSTROKE. 
+// PAUSE: PAUSE UNTIL THE USER ENTERS A KEYSTROKE.
 // ***************************************************************************
 */
 void Pause(void)
 {
   static char msg[] = "Esc aborts or press a key...";
   int c;
-  
+
   StatusLine(msg);                          /* Put msg at bottom of screen */
   c = getch();                              /* Read a character from kbd */
   if(0 == c)                                /* Did use hit a non-ASCII key? */
@@ -266,7 +212,7 @@ void Pause(void)
 
 /*
 // ***************************************************************************
-// MAINWINDOW: ESTABLISH THE MAIN WINDOW 
+// MAINWINDOW: ESTABLISH THE MAIN WINDOW
 // ***************************************************************************
 */
 
@@ -287,8 +233,8 @@ void MainWindow( char *header)
 
 /*
 // ***************************************************************************
-// STATUSLINE: DISPLAY A STATUS LINE 
-// AT THE BOTTOM OF THE SCREEN. 
+// STATUSLINE: DISPLAY A STATUS LINE
+// AT THE BOTTOM OF THE SCREEN.
 // ***************************************************************************
 */
 void StatusLine( char *msg)
@@ -309,8 +255,8 @@ void StatusLine( char *msg)
 
 /*
 // ***************************************************************************
-// DRAWBORDER: DRAW A SOLID SINGLE LINE 
-// AROUND THE CURRENT VIEWPORT. 
+// DRAWBORDER: DRAW A SOLID SINGLE LINE
+// AROUND THE CURRENT VIEWPORT.
 // ***************************************************************************
 */
 void DrawBorder(void)
@@ -324,8 +270,8 @@ void DrawBorder(void)
 
 /*
 // ***************************************************************************
-// CHANGETEXTSTYLE: SIMILAR TO SETTEXTSTYLE, BUT CHECKS FOR 
-// ERRORS THAT MIGHT OCCUR WHIL LOADING THE FONT FILE. 
+// CHANGETEXTSTYLE: SIMILAR TO SETTEXTSTYLE, BUT CHECKS FOR
+// ERRORS THAT MIGHT OCCUR WHIL LOADING THE FONT FILE.
 // ***************************************************************************
 */
 void changetextstyle(int font, int direction, int charsize)
