@@ -2,7 +2,7 @@
 // Created by sami on 10/04/17.
 //
 
-#include <iostream>
+#include "AShape.hpp"
 #include "Graphics.hpp"
 
 void    AShape::drawFrontFace() const
@@ -71,28 +71,4 @@ void    AShape::drawShape() const
     this->drawBackFace();
 
     glEnd();
-}
-
-Things::Things(double CoordX, double CoordY, double CoordZ,
-               double PackX, double PackY, double PackZ,
-               double BoxX, double BoxY, double BoxZ) : AShape()
-{
-    this->_Down_x = -BoxX + (CoordX * 2);
-    this->_Down_y = -BoxY + (CoordY * 2);
-    this->_Down_z = -BoxZ + (CoordZ * 2);
-
-    this->_Up_z = (this->_Down_z + (PackZ * 2));
-    this->_Up_y = (this->_Down_y + (PackY * 2));
-    this->_Up_x = (this->_Down_x + (PackX * 2));
-}
-
-Box::Box(double X, double Y, double Z) : AShape()
-{
-    this->_Down_y = -Y;
-    this->_Down_x = -X;
-    this->_Down_z = -Z;
-
-    this->_Up_x = X;
-    this->_Up_y = Y;
-    this->_Up_z = Z;
 }
