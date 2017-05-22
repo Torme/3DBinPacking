@@ -8,6 +8,13 @@ Things::Things(double CoordX, double CoordY, double CoordZ,
                double PackX, double PackY, double PackZ,
                double BoxX, double BoxY, double BoxZ) : AShape()
 {
+    this->InitThings(CoordX, CoordY, CoordZ, PackX, PackY, PackZ, BoxX, BoxY, BoxZ);
+}
+
+void Things::InitThings(double CoordX, double CoordY, double CoordZ,
+                        double PackX, double PackY, double PackZ,
+                        double BoxX, double BoxY, double BoxZ)
+{
     this->_Down_x = -BoxX + (CoordX * 2);
     this->_Down_y = -BoxY + (CoordY * 2);
     this->_Down_z = -BoxZ + (CoordZ * 2);

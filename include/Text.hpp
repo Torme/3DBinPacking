@@ -10,14 +10,18 @@
 class   Text
 {
 public:
-    Text(const std::string &value, const sf::Font & font,
-         const sf::Color & color, float PosX, float PosY);
+    Text() : text() {}
     ~Text() {}
-    Text(const Text &other) = delete;
-    const Text &operator=(const Text &other) = delete;
+    Text(const Text &other) : text(other.GetText()) {}
+    const Text &operator=(const Text &other);
 
 public:
-    const sf::Text & GetText() { return this->text; }
+    void    SetText(const std::string &value, const sf::Font & font,
+                    const sf::Color & color, float PosX, float PosY);
+
+public:
+    const sf::Text & GetText() const { return this->text; }
+    sf::Text & GetText() { return this->text; }
 
 private:
     sf::Text    text;

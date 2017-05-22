@@ -10,12 +10,16 @@
 class       Things : public AShape
 {
 public:
+    Things() {}
     Things(double CoordX, double CoordY, double CoordZ,
            double PackX, double PackY, double PackZ,
            double BoxX, double BoxY, double BoxZ);
     virtual ~Things() {}
 
 public:
+    void    InitThings(double CoordX, double CoordY, double CoordZ,
+                       double PackX, double PackY, double PackZ,
+                       double BoxX, double BoxY, double BoxZ);
 
 private:
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(3DBinPacking)
 
-include_directories(src)
+include_directories(include)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -15,9 +15,16 @@ set(CMAKE_MODULE_PATH "usr/local/share/SFML/cmake/Modules"
 set(EXECUTABLE_OUTPUT_PATH ../)
 
 set(SOURCE_FILES
-        src/Graphics.cpp
         src/visudat_parser.cpp
-        src/main.cpp)
+        src/main.cpp
+        src/Box.cpp
+        src/Things.cpp
+        src/Text.cpp
+        src/AShape.cpp
+        src/Gui.cpp
+        src/Representation.cpp
+        src/SceneManager.cpp
+        src/SfmlQuad.cpp)
 
 add_executable(${EXE_NAME} ${SOURCE_FILES})
 

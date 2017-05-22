@@ -6,6 +6,11 @@
 
 Box::Box(double X, double Y, double Z) : AShape()
 {
+    this->InitBox(X, Y, Z);
+}
+
+void Box::InitBox(double X, double Y, double Z)
+{
     this->_Down_y = -Y;
     this->_Down_x = -X;
     this->_Down_z = -Z;

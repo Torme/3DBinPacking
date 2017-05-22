@@ -5,70 +5,70 @@
 #include "AShape.hpp"
 #include "Graphics.hpp"
 
-void    AShape::drawFrontFace() const
+void    AShape::drawFrontFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 0, 0, 120);
+    glColor4ub(r, g, b, t);
     glVertex3d(this->_Up_x, this->_Up_y, this->_Up_z);
     glVertex3d(this->_Up_x, this->_Up_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Up_z);
 }
 
-void    AShape::drawLeftFace() const
+void    AShape::drawLeftFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 0, 0, 120);
+    glColor4ub(r, g, b, t);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Up_z);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Up_x, this->_Up_y, this->_Down_z);
     glVertex3d(this->_Up_x, this->_Up_y, this->_Up_z);
 }
 
-void    AShape::drawBackFace() const
+void    AShape::drawBackFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 0, 0, 120);
+    glColor4ub(r, g, b, t);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Up_z);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Up_z);
 }
 
-void   AShape::drawRightFace() const
+void   AShape::drawRightFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 0, 0, 120);
+    glColor4ub(r, g, b, t);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Up_z);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Up_z);
 }
 
-void    AShape::drawTopFace() const
+void    AShape::drawTopFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 0, 0, 120); // bas
+    glColor4ub(r, g, b, t); // bas
     glVertex3d(this->_Up_x, this->_Up_y, this->_Up_z);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Up_z);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Up_z);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Up_z);
 }
 
-void    AShape::drawLowFace() const
+void    AShape::drawLowFace(float r, float g, float b, float t) const
 {
-    glColor4ub(100, 100, 0, 120); // haut
+    glColor4ub(r, g, b, t); // haut
     glVertex3d(this->_Up_x, this->_Up_y, this->_Down_z);
     glVertex3d(this->_Up_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Down_y, this->_Down_z);
     glVertex3d(this->_Down_x, this->_Up_y, this->_Down_z);
 }
 
-void    AShape::drawShape() const
+void    AShape::drawShape(float r, float g, float b, float t) const
 {
     glBegin(GL_QUADS);
 
-    this->drawRightFace();
-    this->drawLeftFace();
-    this->drawTopFace();
-    this->drawLowFace();
-    this->drawFrontFace();
-    this->drawBackFace();
+    this->drawRightFace(r, g, b, t);
+    this->drawLeftFace(r, g, b, t);
+    this->drawTopFace(r, g, b, t);
+    this->drawLowFace(r, g, b, t);
+    this->drawFrontFace(r, g, b, t);
+    this->drawBackFace(r, g, b, t);
 
     glEnd();
 }
